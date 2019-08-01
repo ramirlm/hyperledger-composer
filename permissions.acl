@@ -1,34 +1,34 @@
 rule TodosPodemLerRegistros {
-  description: "Todos os participantes tem permissão de leitura dos recursos"
+  description: "Every participant has read access"
   participant: "br.com.ramir.test.Pessoa"
   operation: READ
   resource: "br.com.ramir.test.*"
   action: ALLOW
 }
 rule RemoveRegistroRule {
-  description: "Registros não podem ser excluidos pelos colaboradores"
+  description: "Collaborators cannot remove registries"
   participant: "br.com.ramir.test.Colaborador"
   operation: DELETE
   resource: "br.com.ramir.test.Ponto"
   action: DENY
 }
 rule RegistrarPonto {
-  description: "Todos os participantes podem registrar ponto"
+  description: "Every pariticipant may register a clock"
   participant: "br.com.ramir.test.Pessoa"
   operation: CREATE
   resource: "br.com.ramir.test.registerClock"
   action: ALLOW
 }
 rule AprovaRegistro {
-  description: "Somente um gestor pode aprovar registros"
+  description: "Only a manager is able to approve a registry"
   participant: "br.com.ramir.test.Gestor"
   operation: UPDATE
-  resource: "br.com.ramir.test.approveRegister"
+  resource: "br.com.ramir.test.approveRegistry"
   action: ALLOW
 }
 
 rule LeituraRegistro {
-  description: "Registro apenas pode ser lido por quem registrou e gestores"
+  description: "Registry may be read Only by managers"
   participant(p): "br.com.ramir.test.Pessoa"
   operation: ALL
   resource(r): "br.com.ramir.test.Ponto"

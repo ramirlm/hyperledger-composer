@@ -25,7 +25,7 @@ transaction registerClock {
   --> Gestor gestor
 }
 
-transaction approveRegister extends registerClock {
+transaction approveRegistry extends registerClock {
   o String id
   o Boolean approval_status
 }
