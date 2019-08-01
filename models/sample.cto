@@ -1,0 +1,31 @@
+namespace br.com.ramir.test
+
+participant Pessoa identified by id {
+  o String id
+  o String nome
+}
+
+participant Gestor extends Pessoa {
+}
+
+participant Colaborador extends Pessoa {
+}
+
+asset Ponto identified by id {
+  o String id
+  o String hit
+  o Boolean approval_status default=false
+  --> Colaborador colaborador
+  --> Gestor gestor
+}
+
+transaction registerClock {
+  o String hit
+  --> Colaborador colaborador
+  --> Gestor gestor
+}
+
+transaction approveRegister extends registerClock {
+  o String id
+  o Boolean approval_status
+}

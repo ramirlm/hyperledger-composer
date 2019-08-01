@@ -1,0 +1,61 @@
+rule TodosPodemLerRegistros {
+  description: "Todos os participantes tem permissão de leitura dos recursos"
+  participant: "br.com.ramir.test.Pessoa"
+  operation: READ
+  resource: "br.com.ramir.test.*"
+  action: ALLOW
+}
+rule RemoveRegistroRule {
+  description: "Registros não podem ser excluidos pelos colaboradores"
+  participant: "br.com.ramir.test.Colaborador"
+  operation: DELETE
+  resource: "br.com.ramir.test.Ponto"
+  action: DENY
+}
+rule RegistrarPonto {
+  description: "Todos os participantes podem registrar ponto"
+  participant: "br.com.ramir.test.Pessoa"
+  operation: CREATE
+  resource: "br.com.ramir.test.registerClock"
+  action: ALLOW
+}
+rule AprovaRegistro {
+  description: "Somente um gestor pode aprovar registros"
+  participant: "br.com.ramir.test.Gestor"
+  operation: UPDATE
+  resource: "br.com.ramir.test.approveRegister"
+  action: ALLOW
+}
+
+rule LeituraRegistro {
+  description: "Registro apenas pode ser lido por quem registrou e gestores"
+  participant(p): "br.com.ramir.test.Pessoa"
+  operation: ALL
+  resource(r): "br.com.ramir.test.Ponto"
+  condition: (r.owner.getIdentifier() === p.getIdentifier() || p.getType() === 'Gestor')
+  action: ALLOW
+}
+
+rule SystemACL {
+  description: "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+  description: "Grant administrators full access to user resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "**"
+  action: ALLOW
+}
+
+rule NetworkAdminSystem {
+  description: "Grant administrators full access to system resources"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
